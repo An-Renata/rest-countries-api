@@ -14,12 +14,23 @@ function Home() {
 
     fetchCountries();
   }, []);
-
+  // hsl(0, 0%, 98%)
+  // shadow-md
   return (
-    <div>
-      <div>
-        <input type="text" placeholder="search for a country"></input>
-        <select>
+    <div className="flex flex-col bg-[#fafafa] pt-10">
+      <div className="flex justify-items-center justify-between px-2 lg:px-11 mb-10">
+        <div className="relative   ">
+          <i
+            className="fa-solid fa-magnifying-glass absolute top-4 left-3"
+            style={{ color: "cfcfcf" }}
+          ></i>
+          <input
+            type="text"
+            placeholder="Search for a country"
+            className="px-10 py-3 border shadow rounded-md w-auto lg:w-[400px] "
+          ></input>
+        </div>
+        <select className="cursor-pointer shadow border text-sm px-4 rounded-md">
           <option value="0">Filter by region</option>
           <option value="africa">Africa</option>
           <option value="america">America</option>
@@ -28,34 +39,36 @@ function Home() {
           <option value="oceania">Oceania</option>
         </select>
       </div>
-      <div className="main">
-        <ul className="country">
+      {/* flex justify-center */}
+      {/* flex flex-wrap gap-14 justify-center */}
+      <div className="px-2 lg:px-11">
+        <ul className="flex flex-wrap gap-16 justify-between">
           {countries.map((country) => (
-            <li class="card">
-              <div className="img">
-                <img src={country.flags.png} alt={country.flags.alt}></img>
-              </div>
-              <div className="about-country">
-                <h3>{country.name.common}</h3>
-                <p>Population: {country.population}</p>
-                <p>Region: {country.region}</p>
-                <p>Capital: {country.capital}</p>
+            <li class="border shadow rounded-md overflow-hidden w-[280px]">
+              {/* <div> */}
+              <img
+                className="block w-full  h-[140px] overflow-hidden object-fill"
+                src={country.flags.png}
+                alt={country.flags.alt}
+              ></img>
+              {/* </div> */}
+              <div className="px-4 py-7">
+                <h3 className="font-bold mb-3">{country.name.common}</h3>
+                <p>
+                  <span className="font-semibold">Population:</span>{" "}
+                  {country.population}
+                </p>
+                <p>
+                  <span className="font-semibold">Region:</span>{" "}
+                  {country.region}
+                </p>
+                <p>
+                  <span className="font-semibold">Capital:</span>{" "}
+                  {country.capital}
+                </p>
               </div>
             </li>
           ))}
-          {/* */}
-          {/* 
-          <li>
-            <div>
-              <p>IMG</p>
-            </div>
-            <div>
-              <h3>Lithuania</h3>
-              <p>population</p>
-              <p>region</p>
-              <p>capital</p>
-            </div>
-          </li> */}
         </ul>
       </div>
     </div>
