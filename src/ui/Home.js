@@ -27,10 +27,10 @@ function Home() {
           <input
             type="text"
             placeholder="Search for a country"
-            className="px-10 py-3 border shadow rounded-md w-auto lg:w-[400px] "
+            className="px-10 py-3 shadow-card-shadow rounded-md w-auto lg:w-[400px] "
           ></input>
         </div>
-        <select className="cursor-pointer shadow border text-sm px-4 rounded-md">
+        <select className="cursor-pointer shadow-card-shadow text-sm px-4 rounded-md">
           <option value="0">Filter by region</option>
           <option value="africa">Africa</option>
           <option value="america">America</option>
@@ -44,7 +44,7 @@ function Home() {
       <div className="px-2 lg:px-11">
         <ul className="flex flex-wrap gap-16 justify-between">
           {countries.map((country) => (
-            <li class="border shadow rounded-md overflow-hidden w-[280px]">
+            <li class=" cursor-pointer shadow-card-shadow rounded-md overflow-hidden w-[280px]">
               {/* <div> */}
               <img
                 className="block w-full  h-[140px] overflow-hidden object-fill"
@@ -52,11 +52,12 @@ function Home() {
                 alt={country.flags.alt}
               ></img>
               {/* </div> */}
-              <div className="px-4 py-7">
-                <h3 className="font-bold mb-3">{country.name.common}</h3>
+              <div className="px-6 py-10">
+                <h3 className="font-extrabold mb-3">{country.name.common}</h3>
                 <p>
                   <span className="font-semibold">Population:</span>{" "}
-                  {country.population}
+                  {/* toLocaleString() methods puts commas between numbers for better readability */}
+                  {country.population.toLocaleString()}
                 </p>
                 <p>
                   <span className="font-semibold">Region:</span>{" "}
