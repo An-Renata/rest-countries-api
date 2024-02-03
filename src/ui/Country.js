@@ -1,14 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+// Spinner from NPM
+import { ClipLoader } from "react-spinners";
+
+const overrideSpinner = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
 function Country() {
+  // data about the selected country
   const data = useLoaderData();
+  const navigate = useNavigate();
 
+  // Set country
   const [countryBorders, setCountryBorders] = useState([]);
   const [isLoading, setIsloading] = useState(false);
 
-  const navigate = useNavigate();
-
+  // Destructuring country data
   const {
     name: { common: countryName },
     region,
@@ -25,7 +35,10 @@ function Country() {
   useEffect(() => {
     async function fetchBorders() {
       try {
+        // If there are neighbours around the country, call async function
         if (borders) {
+          setIsloading(true);
+          // Temporary variable to store all the country names before putting it to state
           let temp = [];
 
           for (const el of borders) {
@@ -33,25 +46,45 @@ function Country() {
 
             temp.push(border);
           }
-
+          // Set borders to state
           setCountryBorders(temp);
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsloading(false);
       }
     }
+
     fetchBorders();
   }, [borders]);
 
   return (
     <div className="px-12">
       <button
+        // Navigate function goes back to the homepage
         onClick={() => navigate(-1)}
         className="d-block mt-5 border px-6 py-1 text-xs shadow-sm rounded-md font-semibold"
       >
         &larr; Back
       </button>
-      {isLoading && <p>LOADING</p>}
+      {isLoading && (
+        // NPM spinner
+        <ClipLoader
+          color="#2d3b48"
+          cssOverride={{
+            position: "absolute",
+            right: "50%",
+            bottom: "50%",
+            marginTop: "auto",
+            display: "block",
+            transform: "translate(-50%, -50%)",
+          }}
+          loading={isLoading}
+          size={50}
+          speedMultiplier={1}
+        />
+      )}
 
       {!isLoading && (
         <div className="grid gap-5 items-center grid-cols-2 py-10">
@@ -121,6 +154,7 @@ function Country() {
 
 export default Country;
 
+// Loader function to get more data about the currently selected country
 export const countryLoader = async (country) => {
   const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
 
@@ -129,6 +163,9 @@ export const countryLoader = async (country) => {
   return data;
 };
 
+// Fet borders data in fullName.
+// Selected country gives country code. i.e. ["LTU", "EST"]
+// Function calls the API again, to fetch full country name
 async function getBorderCountries(code) {
   const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
 

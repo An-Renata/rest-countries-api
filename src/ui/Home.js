@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import CountryItem from "./CountryItem";
+import SearchInputField from "./SearchInputField";
+import SelectRegionComponent from "./SelectRegionComponent";
 
 function Home() {
+  // loader data returns information about the countries
   const countries = useLoaderData();
 
+  // states to store data when user is searching for a country of filters countries by region
   const [countriesList, setCountriesList] = useState([]);
   const [searchCountry, setSearchCountry] = useState("");
   const [countriesByRegion, setCountriesByRegion] = useState("all");
 
-  // let currentRegion = useRef("all");
-  // const navigate = useNavigate();
+  function handleSearch(e) {
+    setSearchCountry(() => e.target.value);
+  }
+
+  function handleCountriesByRegion(e) {
+    setCountriesByRegion(() => e.target.value);
+  }
 
   //? SEARCH BY THE REGION OR FROM ALL THE LIST
   useEffect(() => {
@@ -46,56 +55,39 @@ function Home() {
         ? countries.filter(
             (country) => country.region.toLowerCase() === countriesByRegion
           )
-        : // if no region is selected, return all the countries
+        : // If no region is selected, return all the countries
           countries;
 
-    // update the countriesList array
+    // Update the countriesList array
     setCountriesList(filteredItems);
-    // Empty the input after region changes
+    // Clear the input field after region changes
     setSearchCountry("");
-
-    // if the region changes, navigate to the currently selected region
-    // if (countriesByRegion !== currentRegion.current)
-    //   navigate(`/region/${countriesByRegion}`);
-
-    // update the ref currentRegion with the currently selected region
-    // currentRegion.current = countriesByRegion;
   }, [countriesByRegion, countries]);
 
   return (
     <div className="pt-10 flex flex-col px-5 sm:px-10">
-      {/* ! relative */}
       <div className="flex justify-between mb-10">
-        <div className="relative">
-          <i
-            className="fa-solid fa-magnifying-glass absolute top-4 left-3"
-            style={{ color: "cfcfcf" }}
-          ></i>
-          <input
-            type="text"
-            value={searchCountry}
-            placeholder="Search for a country"
-            className="px-10 py-3 shadow-card-shadow rounded-md w-auto lg:w-[400px] "
-            onChange={(e) => setSearchCountry(e.target.value)}
-          ></input>
-        </div>
-        <select
-          value={countriesByRegion}
-          onChange={(e) => setCountriesByRegion(e.target.value)}
-          className="cursor-pointer shadow-card-shadow text-sm px-4 rounded-md"
-        >
-          <option value="all">Filter by region</option>
-          <option value="africa">Africa</option>
-          <option value="americas">America</option>
-          <option value="asia">Asia</option>
-          <option value="europe">Europe</option>
-          <option value="oceania">Oceania</option>
-        </select>
+        {/* Search field */}
+        <SearchInputField
+          searchCountry={searchCountry}
+          handleSearch={handleSearch}
+        />
+
+        {/* Dropdown list of region selection field */}
+        <SelectRegionComponent
+          handleCountriesByRegion={handleCountriesByRegion}
+          countriesByRegion={countriesByRegion}
+        />
       </div>
 
       <ul className="flex flex-wrap gap-14 justify-evenly">
-        {countriesList.length === undefined && <p>No countries found</p>}
-
+        {/* Render this "error" message if there are no countries to be found */}
+        {countriesList.length === 0 && (
+          <p>
+            No countries found by name <strong>{searchCountry}</strong>
+          </p>
+        )}
+        {/* Loop through the given country list from the *LOADER* to create each item of the country */}
         {countriesList.length > 0 &&
           countriesList.map((country) => (
             <CountryItem country={country} key={country.name.common} />
