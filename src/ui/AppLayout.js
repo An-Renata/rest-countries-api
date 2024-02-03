@@ -5,10 +5,8 @@ function AppLayout() {
   return (
     <>
       <Header />
-
-      {/* <div> */}
+      {/* children of the AppLayout */}
       <Outlet />
-      {/* </div> */}
     </>
   );
 }
