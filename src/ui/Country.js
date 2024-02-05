@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useOutletContext } from "react-router-dom";
 // Spinner from NPM
 import { ClipLoader } from "react-spinners";
 
-const overrideSpinner = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
 function Country() {
+  const [darkMode] = useOutletContext();
   // data about the selected country
   const data = useLoaderData();
   const navigate = useNavigate();
@@ -60,11 +55,21 @@ function Country() {
   }, [borders]);
 
   return (
-    <div className="px-12">
+    <div
+      className={`px-12 h-screen ${
+        darkMode
+          ? "bg-darkModeBackground text-darkModeText"
+          : "bg-lightModeElement"
+      }`}
+    >
       <button
         // Navigate function goes back to the homepage
         onClick={() => navigate(-1)}
-        className="d-block mt-5 border px-6 py-1 text-xs shadow-sm rounded-md font-semibold"
+        className={`d-block mt-5 border px-6 py-1 text-xs shadow-sm rounded-md font-semibold ${
+          darkMode
+            ? "bg-darkModeElement text-darkModeText shadow-none"
+            : "bg-lightModeElement"
+        }`}
       >
         &larr; Back
       </button>
@@ -87,7 +92,7 @@ function Country() {
       )}
 
       {!isLoading && (
-        <div className="grid gap-5 items-center grid-cols-2 py-10">
+        <div className="grid gap-5 items-center grid-cols-2 py-10 ">
           <img src={flag} alt={flagDescription} />
 
           {/* country data */}
@@ -143,7 +148,21 @@ function Country() {
 
             <h4 className="text-sm font-semibold">
               Border Countries:{" "}
-              <span className="font-light">{countryBorders.join(", ")}</span>
+              <p className="font-light space-x-2 inline-block">
+                {countryBorders.length > 0
+                  ? countryBorders.map((el) => (
+                      <span
+                        className={`border shadow-sm px-3 py-0.5 rounded ${
+                          darkMode
+                            ? "bg-darkModeElement text-darkModeText shadow-none border-darkModeElement"
+                            : "bg-lightModeElement"
+                        }`}
+                      >
+                        {el}
+                      </span>
+                    ))
+                  : "No border countries provided"}{" "}
+              </p>
             </h4>
           </div>
         </div>

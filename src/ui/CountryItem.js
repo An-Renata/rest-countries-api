@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 function CountryItem({ country }) {
+  const [darkMode] = useOutletContext();
   return (
     <Link to={`/country/${country.name.common}`}>
       <li
-        className="cursor-pointer shadow-card-shadow rounded-md overflow-hidden w-[250px]"
+        className={`cursor-pointer shadow-card-shadow rounded-md overflow-hidden w-[250px] ${
+          darkMode
+            ? "bg-darkModeElement text-darkModeText shadow-none"
+            : "bg-lightModeElement text-lightModeText"
+        }`}
         key={country.name.common}
       >
         <img
-          className="block w-full  h-[140px] overflow-hidden object-fill"
+          className="block w-full h-[140px] overflow-hidden object-fill"
           src={country.flags.png}
           alt={country.flags.alt}
         ></img>

@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
 import CountryItem from "./CountryItem";
 import SearchInputField from "./SearchInputField";
 import SelectRegionComponent from "./SelectRegionComponent";
 
 function Home() {
-  // loader data returns information about the countries
-  const countries = useLoaderData();
+  const [darkMode] = useOutletContext();
 
   // states to store data when user is searching for a country of filters countries by region
   const [countriesList, setCountriesList] = useState([]);
   const [searchCountry, setSearchCountry] = useState("");
   const [countriesByRegion, setCountriesByRegion] = useState("all");
+
+  // loader data returns information about the countries
+  const countries = useLoaderData();
 
   function handleSearch(e) {
     setSearchCountry(() => e.target.value);
@@ -24,6 +26,7 @@ function Home() {
   //? SEARCH BY THE REGION OR FROM ALL THE LIST
   useEffect(() => {
     if (searchCountry || countriesByRegion !== "all") {
+      // Filter countries which match the given string in the search field
       const filterCountrySearch = countries.filter(
         (country) =>
           country.name.common
@@ -31,9 +34,10 @@ function Home() {
             .includes(searchCountry.toLowerCase()) &&
           country.region.toLowerCase() === countriesByRegion
       );
-
+      // Set this filtered list based on the search results to render on the screen
       setCountriesList(filterCountrySearch);
     }
+    // Search country from all country list
     if (searchCountry && countriesByRegion === "all") {
       const countrySearchFromAll = countries.filter(
         (country) =>
@@ -53,6 +57,7 @@ function Home() {
     const filteredItems =
       countriesByRegion !== "all"
         ? countries.filter(
+            // Filter just those countries which has the same selected region
             (country) => country.region.toLowerCase() === countriesByRegion
           )
         : // If no region is selected, return all the countries
@@ -65,7 +70,11 @@ function Home() {
   }, [countriesByRegion, countries]);
 
   return (
-    <div className="pt-10 flex flex-col px-5 sm:px-10">
+    <div
+      className={`pt-10 flex flex-col px-5 sm:px-10 transition-all duration-1000 ${
+        darkMode ? "bg-darkModeBackground" : "bglightModeBackground"
+      }`}
+    >
       <div className="flex justify-between mb-10">
         {/* Search field */}
         <SearchInputField
@@ -84,7 +93,7 @@ function Home() {
         {/* Render this "error" message if there are no countries to be found */}
         {countriesList.length === 0 && (
           <p>
-            No countries found by name <strong>{searchCountry}</strong>
+            No countries found by name <strong>{searchCountry}</strong> 🥺
           </p>
         )}
         {/* Loop through the given country list from the *LOADER* to create each item of the country */}
