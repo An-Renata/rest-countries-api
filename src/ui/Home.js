@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useOutletContext, useParams } from "react-router-dom";
+import { useLoaderData, useOutletContext } from "react-router-dom";
 import CountryItem from "./CountryItem";
 import SearchInputField from "./SearchInputField";
 import SelectRegionComponent from "./SelectRegionComponent";
@@ -69,13 +69,16 @@ function Home() {
     setSearchCountry("");
   }, [countriesByRegion, countries]);
 
+  // ${
+  //   darkMode ? "bg-darkModeBackground" : "bg-lightModeBackground"
+  // }
   return (
     <div
-      className={`pt-10 flex flex-col px-5 sm:px-10 transition-all duration-1000 ${
-        darkMode ? "bg-darkModeBackground" : "bglightModeBackground"
+      className={`pt-10 flex flex-col px-5 sm:px-10 ${
+        darkMode ? "bg-darkModeBackground" : "bg-lightModeBackground"
       }`}
     >
-      <div className="flex justify-between mb-10">
+      <div className="flex flex-col sm:flex-row justify-between mb-10">
         {/* Search field */}
         <SearchInputField
           searchCountry={searchCountry}
@@ -89,10 +92,14 @@ function Home() {
         />
       </div>
 
-      <ul className="flex flex-wrap gap-14 justify-evenly">
+      <ul className="flex flex-wrap gap-14 justify-evenly pb-10">
         {/* Render this "error" message if there are no countries to be found */}
         {countriesList.length === 0 && (
-          <p>
+          <p
+            className={`${
+              darkMode ? "text-darkModeText" : "text-lightModeText"
+            }`}
+          >
             No countries found by name <strong>{searchCountry}</strong> 🥺
           </p>
         )}

@@ -56,9 +56,9 @@ function Country() {
 
   return (
     <div
-      className={`px-12 h-screen ${
+      className={`px-8 sm:px-12 ${
         darkMode
-          ? "bg-darkModeBackground text-darkModeText"
+          ? "text-darkModeText bg-darkModeBackground"
           : "bg-lightModeElement"
       }`}
     >
@@ -84,6 +84,9 @@ function Country() {
             marginTop: "auto",
             display: "block",
             transform: "translate(-50%, -50%)",
+            backgroundColor: darkMode
+              ? "bg-darkModeBackground"
+              : "bg-lightModeBackground",
           }}
           loading={isLoading}
           size={50}
@@ -92,14 +95,16 @@ function Country() {
       )}
 
       {!isLoading && (
-        <div className="grid gap-5 items-center grid-cols-2 py-10 ">
+        <div className="grid gap-5 items-center grid-cols-1 sm:grid-cols-2 py-10">
           <img src={flag} alt={flagDescription} />
 
           {/* country data */}
           <div className="self-center">
-            <h3 className="font-bold text-xl mb-6">{countryName}</h3>
+            <h3 className="font-bold text-xl mt-5 sm:mt-0 mb-6">
+              {countryName}
+            </h3>
 
-            <div className="flex gap-10 sm:gap-20 mb-6">
+            <div className="flex flex-col sm:flex-row gap-10 sm:gap-20 mb-6">
               <div className="font-semibold text-sm leading-8">
                 <p>
                   Native Name: <span className="font-light">{nativeName}</span>
@@ -148,7 +153,7 @@ function Country() {
 
             <h4 className="text-sm font-semibold">
               Border Countries:{" "}
-              <p className="font-light space-x-2 inline-block">
+              <p className="font-light gap-2 flex flex-wrap sm:inline-block sm:space-x-2 mt-2 sm:mt-0 ">
                 {countryBorders.length > 0
                   ? countryBorders.map((el) => (
                       <span
@@ -163,6 +168,7 @@ function Country() {
                     ))
                   : "No border countries provided"}{" "}
               </p>
+              {/* sm:inline-block */}
             </h4>
           </div>
         </div>

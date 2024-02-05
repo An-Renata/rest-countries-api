@@ -6,7 +6,7 @@ function SelectRegionComponent({ countriesByRegion, handleCountriesByRegion }) {
     <select
       value={countriesByRegion}
       onChange={(e) => handleCountriesByRegion(e)}
-      className={`cursor-pointer shadow-card-shadow text-sm px-4 rounded-md ${
+      className={`cursor-pointer shadow-card-shadow text-sm px-4 rounded-md w-1/2 py-3  sm:w-auto ${
         darkMode
           ? "bg-darkModeElement text-darkModeText shadow-none"
           : "bg-lightModeElement"

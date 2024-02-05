@@ -17,7 +17,7 @@ function SearchInputField({ searchCountry, handleSearch }) {
         type="text"
         value={searchCountry}
         placeholder="Search for a country"
-        className={`px-10 py-3 shadow-card-shadow rounded-md w-auto lg:w-[400px]  ${
+        className={`px-10 w-full mb-7 sm:mb-0 py-3 shadow-card-shadow rounded-md sm:w-auto lg:w-[400px]  ${
           darkMode ? "bg-darkModeElement  shadow-none" : "bg-lightModeElement"
         }`}
         onChange={(e) => handleSearch(e)}
