@@ -70,8 +70,8 @@ function Home() {
   }, [countriesByRegion, countries]);
 
   return (
-    <div
-      className={`pt-10 flex flex-col px-5 sm:px-10 ${
+    <main
+      className={`pt-10 flex flex-col px-5 sm:px-10 max-w-7xl mx-auto ${
         darkMode ? "bg-darkModeBackground" : "bg-lightModeBackground"
       }`}
     >
@@ -106,7 +106,7 @@ function Home() {
             <CountryItem country={country} key={country.name.common} />
           ))}
       </ul>
-    </div>
+    </main>
   );
 }
 

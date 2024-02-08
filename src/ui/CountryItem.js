@@ -2,6 +2,7 @@ import { Link, useOutletContext } from "react-router-dom";
 
 function CountryItem({ country }) {
   const [darkMode] = useOutletContext();
+
   return (
     <Link to={`/country/${country.name.common}`}>
       <li

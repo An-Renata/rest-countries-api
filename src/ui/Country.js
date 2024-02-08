@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useNavigate, useOutletContext } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 // Spinner from NPM
 import { ClipLoader } from "react-spinners";
 
@@ -27,6 +32,7 @@ function Country() {
     flags: { svg: flag, alt: flagDescription },
   } = data[0];
 
+  console.log(tld);
   useEffect(() => {
     async function fetchBorders() {
       try {
@@ -64,7 +70,7 @@ function Country() {
     >
       <button
         // Navigate function goes back to the homepage
-        onClick={() => navigate("/")}
+        onClick={() => navigate(-1)}
         className={`d-block mt-5 border px-6 py-1 text-xs shadow-sm rounded-md font-semibold ${
           darkMode
             ? "bg-darkModeElement text-darkModeText shadow-none"
@@ -100,9 +106,9 @@ function Country() {
 
           {/* country data */}
           <div className="self-center">
-            <h3 className="font-bold text-xl mt-5 sm:mt-0 mb-6">
+            <h2 className="font-bold text-xl mt-5 sm:mt-0 mb-6">
               {countryName}
-            </h3>
+            </h2>
 
             <div className="flex flex-col sm:flex-row gap-10 sm:gap-20 mb-6">
               <div className="font-semibold text-sm leading-8">
@@ -127,7 +133,11 @@ function Country() {
               <div className="font-semibold text-sm leading-8">
                 <p>
                   Top Level Domain:{" "}
-                  <span className="font-light"> {tld[0] ?? ""}</span>
+                  <span className="font-light">
+                    {" "}
+                    {tld.map((domain) => domain + " ") ||
+                      "No information available"}
+                  </span>
                 </p>
                 <p>
                   Currencies:{" "}
@@ -150,21 +160,24 @@ function Country() {
                 </p>
               </div>
             </div>
-
+            {/* flex-wrap  sm:space-x-2 sm:inline-block */}
             <h4 className="text-sm font-semibold">
               Border Countries:{" "}
-              <p className="font-light gap-2 flex flex-wrap sm:inline-block sm:space-x-2 mt-2 sm:mt-0 ">
+              <p className="font-light flex-wrap gap-3 flex   mt-2">
                 {countryBorders.length > 0
                   ? countryBorders.map((el) => (
-                      <span
-                        className={`border shadow-sm px-3 py-0.5 rounded ${
-                          darkMode
-                            ? "bg-darkModeElement text-darkModeText shadow-none border-darkModeElement"
-                            : "bg-lightModeElement"
-                        }`}
-                      >
-                        {el}
-                      </span>
+                      <Link to={`/country/${el}`}>
+                        <span
+                          className={`border shadow-sm px-3 py-0.5 rounded hover:bg-darkModeElement hover:text-lightModeElement transition-all duration-500 ${
+                            darkMode
+                              ? "bg-darkModeElement hover:text-darkModeElement text-darkModeText shadow-none border-darkModeElement"
+                              : "bg-lightModeElement"
+                          }`}
+                          key={el}
+                        >
+                          {el}
+                        </span>
+                      </Link>
                     ))
                   : "No border countries provided"}{" "}
               </p>

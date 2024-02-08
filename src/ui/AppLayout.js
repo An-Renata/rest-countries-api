@@ -8,6 +8,7 @@ function AppLayout() {
   function onDarkMode() {
     setDarkMode(() => !darkMode);
   }
+
   return (
     <div
       className={`h-screen w-screen ${
