@@ -12,6 +12,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
+        path: "/",
         index: "/",
         element: <Home />,
         loader: countriesLoader, // load all the countries to the homepage when app is running
