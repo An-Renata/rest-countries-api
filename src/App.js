@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 import Home from "./ui/Home";
 import AppLayout from "./ui/AppLayout";
@@ -10,12 +14,11 @@ import { countriesLoader } from "./ui/Home";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
-    path: "/",
-    index: "/",
+
     children: [
       {
-        // path: "/",
-        // index: "/",
+        path: "/",
+        index: "/",
         element: <Home />,
         loader: countriesLoader, // load all the countries to the homepage when app is running
       },
@@ -23,6 +26,10 @@ const router = createBrowserRouter([
         path: "/country/:countryName",
         element: <Country />,
         loader: ({ params }) => countryLoader(params.countryName), // catch information about the currently selected country
+      },
+      {
+        path: "*", // Match any other path
+        element: <Navigate to="/" replace />, // Redirect to the homepage ("/") without adding to history
       },
     ],
   },
