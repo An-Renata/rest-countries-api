@@ -10,10 +10,12 @@ import { countriesLoader } from "./ui/Home";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    path: "/",
+    index: "/",
     children: [
       {
-        path: "/",
-        index: "/",
+        // path: "/",
+        // index: "/",
         element: <Home />,
         loader: countriesLoader, // load all the countries to the homepage when app is running
       },
