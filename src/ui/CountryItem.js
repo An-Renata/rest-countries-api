@@ -15,7 +15,7 @@ function CountryItem({ country }) {
         <img
           className="block w-full h-[140px] overflow-hidden object-fill"
           src={country.flags.png}
-          alt={country.flags.alt}
+          alt={country.flags.alt || `${country.name.common} flag`}
         ></img>
         <div className="px-6 py-10">
           <h3 className="font-extrabold mb-3">{country.name.common}</h3>

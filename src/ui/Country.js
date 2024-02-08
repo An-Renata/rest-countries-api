@@ -64,7 +64,7 @@ function Country() {
     >
       <button
         // Navigate function goes back to the homepage
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className={`d-block mt-5 border px-6 py-1 text-xs shadow-sm rounded-md font-semibold ${
           darkMode
             ? "bg-darkModeElement text-darkModeText shadow-none"
@@ -96,7 +96,7 @@ function Country() {
 
       {!isLoading && (
         <div className="grid gap-5 items-center grid-cols-1 sm:grid-cols-2 py-10">
-          <img src={flag} alt={flagDescription} />
+          <img src={flag} alt={flagDescription || `${countryName} flag`} />
 
           {/* country data */}
           <div className="self-center">
@@ -168,7 +168,6 @@ function Country() {
                     ))
                   : "No border countries provided"}{" "}
               </p>
-              {/* sm:inline-block */}
             </h4>
           </div>
         </div>

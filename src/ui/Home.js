@@ -69,9 +69,6 @@ function Home() {
     setSearchCountry("");
   }, [countriesByRegion, countries]);
 
-  // ${
-  //   darkMode ? "bg-darkModeBackground" : "bg-lightModeBackground"
-  // }
   return (
     <div
       className={`pt-10 flex flex-col px-5 sm:px-10 ${
@@ -100,7 +97,7 @@ function Home() {
               darkMode ? "text-darkModeText" : "text-lightModeText"
             }`}
           >
-            No countries found by name <strong>{searchCountry}</strong> 🥺
+            No countries found by name <strong>{searchCountry}</strong>
           </p>
         )}
         {/* Loop through the given country list from the *LOADER* to create each item of the country */}
